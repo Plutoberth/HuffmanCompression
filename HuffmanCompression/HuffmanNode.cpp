@@ -32,7 +32,7 @@ HuffmanNode::HuffmanNode(const HuffmanNode && other)
 {
 	//Move constructor - only transfers the ownership of resources
 	//Used with rvalues, such as function return values.
-	//Will trigger with: HuffmanNode node = getNode();
+	//Will trigger with: HuffmanNode node = getNode(), for example
 	this->_data = other._data;
 	this->_left = other._left;
 	this->_right = other._right;
