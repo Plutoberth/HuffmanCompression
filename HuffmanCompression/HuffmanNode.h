@@ -6,9 +6,13 @@ using std::string;
 
 class HuffmanNode
 {
+public:
 	HuffmanNode();
 	HuffmanNode(HuffmanPair pair);
 	HuffmanNode(HuffmanPair pair, HuffmanNode* right, HuffmanNode* left);
+
+	HuffmanNode(const HuffmanNode& other);
+	HuffmanNode& operator=(const HuffmanNode& other);
 
 	~HuffmanNode();
 
