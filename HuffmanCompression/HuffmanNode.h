@@ -7,6 +7,7 @@ using std::string;
 class HuffmanNode
 {
 public:
+	//TODO: Move constructor
 	HuffmanNode();
 	HuffmanNode(HuffmanPair pair);
 	HuffmanNode(HuffmanPair pair, HuffmanNode* right, HuffmanNode* left);

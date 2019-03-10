@@ -23,6 +23,8 @@ HuffmanNode::HuffmanNode(HuffmanPair pair, HuffmanNode * right, HuffmanNode * le
 
 HuffmanNode::HuffmanNode(const HuffmanNode & other)
 {
+	this->_right = nullptr;
+	this->_left = nullptr;
 	*this = other;
 }
 
@@ -83,5 +85,5 @@ void HuffmanNode::setLeftChild(HuffmanNode* node)
 
 bool HuffmanNode::operator()(HuffmanNode first, HuffmanNode second)
 {
-	return first.getDataRef().getFrequency() > second.getDataRef().getFrequency();
+	return first.getDataRef() > second.getDataRef();
 }
