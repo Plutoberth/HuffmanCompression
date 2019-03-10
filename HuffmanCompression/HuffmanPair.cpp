@@ -15,6 +15,11 @@ void HuffmanPair::incFrequency()
 	this->_frequency++;
 }
 
+void HuffmanPair::setFrequency(int frequency)
+{
+	this->_frequency = frequency;
+}
+
 bool HuffmanPair::operator==(const HuffmanPair & other)
 {
 	return this->_frequency == other._frequency;

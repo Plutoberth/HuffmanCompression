@@ -12,6 +12,7 @@ class HuffmanPair
 	int getFrequency();
 
 	void incFrequency();
+	void setFrequency(int frequency);
 
 	//Overloaded comparison ops
 	bool operator==(const HuffmanPair& other);
