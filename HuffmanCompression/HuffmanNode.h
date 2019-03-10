@@ -17,12 +17,16 @@ public:
 	~HuffmanNode();
 
 	HuffmanPair getData() const;
+	HuffmanPair& getDataRef();
 
 	HuffmanNode* getRightChild() const;
 	HuffmanNode* getLeftChild() const;
 
 	void setRightChild(HuffmanNode* node);
 	void setLeftChild(HuffmanNode* node);
+
+	//Comparison op for huffman node with huffman data
+	bool operator() (HuffmanNode first, HuffmanNode second);
 
 private:
 	HuffmanPair _data;
