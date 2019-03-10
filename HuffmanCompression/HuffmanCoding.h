@@ -7,7 +7,7 @@
 #include <fstream>
 #include <iostream>
 
-typedef std::priority_queue<HuffmanNode, std::vector<HuffmanNode>, HuffmanNode> HuffmanPriorityQueue;
+typedef std::priority_queue<HuffmanNode*, std::vector<HuffmanNode*>, HuffmanNode> HuffmanPriorityQueue;
 
 class HuffmanCoding
 {
