@@ -5,6 +5,7 @@
 #include <map>
 #include <queue>
 
+typedef std::priority_queue<HuffmanNode, std::vector<HuffmanNode>, HuffmanNode> HuffmanPriorityQueue;
 
 class HuffmanCoding
 {
@@ -17,4 +18,5 @@ public:
 
 private:
 	string filename;
+	HuffmanPriorityQueue getFrequencyQueue();
 };
