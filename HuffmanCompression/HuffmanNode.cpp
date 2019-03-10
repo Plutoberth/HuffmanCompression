@@ -3,6 +3,8 @@
 HuffmanNode::HuffmanNode()
 {
 	//Let all values be constructed with default ctors
+	this->_right = nullptr;
+	this->_left = nullptr;
 }
 
 HuffmanNode::HuffmanNode(HuffmanPair pair)

@@ -28,6 +28,7 @@ HuffmanPriorityQueue HuffmanCoding::getFrequencyQueue()
 		throw new std::exception();
 	}
 
+
 	return HuffmanPriorityQueue();
 }
 
