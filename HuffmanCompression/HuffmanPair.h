@@ -8,9 +8,9 @@ class HuffmanPair
 {
 public:
 	HuffmanPair();
-	HuffmanPair(string data, int frequency);
+	HuffmanPair(char data, int frequency);
 
-	string getData();
+	char getData();
 	int getFrequency();
 
 	void incFrequency();
@@ -22,6 +22,6 @@ public:
 	bool operator<(const HuffmanPair& other);
 
 private:
-	string _data;
+	char _data;
 	int _frequency;
 };

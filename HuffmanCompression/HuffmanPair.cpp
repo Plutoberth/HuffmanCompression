@@ -4,13 +4,13 @@ HuffmanPair::HuffmanPair()
 {
 }
 
-HuffmanPair::HuffmanPair(string data, int frequency)
+HuffmanPair::HuffmanPair(char data, int frequency)
 {
 	this->_data = data;
 	this->_frequency = frequency;
 }
 
-string HuffmanPair::getData()
+char HuffmanPair::getData()
 {
 	return this->_data;
 }
