@@ -10,12 +10,12 @@ HuffmanPair::HuffmanPair(char data, int frequency)
 	this->_frequency = frequency;
 }
 
-char HuffmanPair::getData()
+char HuffmanPair::getData() const
 {
 	return this->_data;
 }
 
-int HuffmanPair::getFrequency()
+int HuffmanPair::getFrequency() const
 {
 	return this->_frequency;
 }

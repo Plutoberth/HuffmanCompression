@@ -10,8 +10,8 @@ public:
 	HuffmanPair();
 	HuffmanPair(char data, int frequency);
 
-	char getData();
-	int getFrequency();
+	char getData() const;
+	int getFrequency() const;
 
 	void incFrequency();
 	void setFrequency(int frequency);
