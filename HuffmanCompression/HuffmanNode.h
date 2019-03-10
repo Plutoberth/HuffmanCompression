@@ -27,7 +27,7 @@ public:
 	void setLeftChild(HuffmanNode* node);
 
 	//Comparison op for huffman node with huffman data
-	bool operator() (const HuffmanNode& first, const HuffmanNode& second) const;
+	bool operator() (const HuffmanNode* first, const HuffmanNode* second) const;
 
 private:
 	HuffmanPair _data;

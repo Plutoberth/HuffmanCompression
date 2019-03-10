@@ -83,7 +83,7 @@ void HuffmanNode::setLeftChild(HuffmanNode* node)
 	this->_left = node;
 }
 
-bool HuffmanNode::operator()(const HuffmanNode& first, const HuffmanNode& second) const
+bool HuffmanNode::operator()(const HuffmanNode* first, const HuffmanNode* second) const
 {
-	return first.getDataRef() > second.getDataRef();
+	return first->getDataRef() > second->getDataRef();
 }
