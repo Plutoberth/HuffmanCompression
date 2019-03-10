@@ -14,3 +14,18 @@ void HuffmanPair::incFrequency()
 {
 	this->_frequency++;
 }
+
+bool HuffmanPair::operator==(const HuffmanPair & other)
+{
+	return this->_frequency == other._frequency;
+}
+
+bool HuffmanPair::operator>(const HuffmanPair & other)
+{
+	return this->_frequency > other._frequency;
+}
+
+bool HuffmanPair::operator<(const HuffmanPair & other)
+{
+	return this->_frequency < other._frequency;
+}
