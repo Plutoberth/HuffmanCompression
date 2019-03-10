@@ -28,6 +28,16 @@ HuffmanNode::HuffmanNode(const HuffmanNode & other)
 	*this = other;
 }
 
+HuffmanNode::HuffmanNode(const HuffmanNode && other)
+{
+	//Move constructor - only transfers the ownership of resources
+	//Used with rvalues, such as function return values.
+	//Will trigger with: HuffmanNode node = getNode();
+	this->_data = other._data;
+	this->_left = other._left;
+	this->_right = other._right;
+}
+
 HuffmanNode& HuffmanNode::operator=(const HuffmanNode & other)
 {
 	if (this == &other)
