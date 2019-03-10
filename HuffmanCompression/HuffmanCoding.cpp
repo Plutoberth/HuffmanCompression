@@ -11,6 +11,7 @@ HuffmanPriorityQueue HuffmanCoding::getFrequencyQueue()
 	std::map<char, int> frequencyMap;
 	//Input stream to read the file
 	std::ifstream datafile(this->filename);
+	HuffmanPriorityQueue pqueue;
 	char currentChar;
 
 	//Make sure that we opened the file
@@ -28,10 +29,17 @@ HuffmanPriorityQueue HuffmanCoding::getFrequencyQueue()
 		throw new std::exception();
 	}
 
+	for (auto pair: frequencyMap)
+	{
+		pqueue.push(HuffmanNode(HuffmanPair(pair.first, pair.second)));
+	}
 
-	return HuffmanPriorityQueue();
+	//Some temporary printing code
+	/*while (!pqueue.empty())
+	{
+		std::cout << pqueue.top().getData().getData() << " : " << pqueue.top().getData().getFrequency() << std::endl;
+		pqueue.pop();
+	}*/
+
+	return pqueue;
 }
-
-
-
-
