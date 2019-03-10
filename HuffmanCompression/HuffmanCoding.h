@@ -4,6 +4,7 @@
 
 #include <map>
 #include <queue>
+#include <fstream>
 
 typedef std::priority_queue<HuffmanNode, std::vector<HuffmanNode>, HuffmanNode> HuffmanPriorityQueue;
 
