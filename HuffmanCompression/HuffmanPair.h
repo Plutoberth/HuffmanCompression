@@ -6,6 +6,7 @@ using std::string;
 
 class HuffmanPair
 {
+public:
 	HuffmanPair(string data, int frequency);
 
 	string getData();

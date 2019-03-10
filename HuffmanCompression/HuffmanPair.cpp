@@ -1,5 +1,11 @@
 #include "HuffmanPair.h"
 
+HuffmanPair::HuffmanPair(string data, int frequency)
+{
+	this->_data = data;
+	this->_frequency = frequency;
+}
+
 string HuffmanPair::getData()
 {
 	return this->_data;
