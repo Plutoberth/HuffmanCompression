@@ -30,17 +30,17 @@ void HuffmanPair::setFrequency(int frequency)
 	this->_frequency = frequency;
 }
 
-bool HuffmanPair::operator==(const HuffmanPair & other)
+bool HuffmanPair::operator==(const HuffmanPair & other) const
 {
 	return this->_frequency == other._frequency;
 }
 
-bool HuffmanPair::operator>(const HuffmanPair & other)
+bool HuffmanPair::operator>(const HuffmanPair & other) const
 {
 	return this->_frequency > other._frequency;
 }
 
-bool HuffmanPair::operator<(const HuffmanPair & other)
+bool HuffmanPair::operator<(const HuffmanPair & other) const
 {
 	return this->_frequency < other._frequency;
 }

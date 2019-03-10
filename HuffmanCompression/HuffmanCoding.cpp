@@ -35,11 +35,11 @@ HuffmanPriorityQueue HuffmanCoding::getFrequencyQueue()
 	}
 
 	//Some temporary printing code
-	/*while (!pqueue.empty())
+	while (!pqueue.empty())
 	{
-		std::cout << pqueue.top().getData().getData() << " : " << pqueue.top().getData().getFrequency() << std::endl;
+		std::cout << pqueue.top().getDataRef().getData() << " : " << pqueue.top().getDataRef().getFrequency() << std::endl;
 		pqueue.pop();
-	}*/
+	}
 
 	return pqueue;
 }

@@ -58,7 +58,7 @@ HuffmanPair HuffmanNode::getData() const
 	return this->_data;
 }
 
-HuffmanPair & HuffmanNode::getDataRef()
+const HuffmanPair & HuffmanNode::getDataRef() const
 {
 	return this->_data;
 }
@@ -83,7 +83,7 @@ void HuffmanNode::setLeftChild(HuffmanNode* node)
 	this->_left = node;
 }
 
-bool HuffmanNode::operator()(HuffmanNode first, HuffmanNode second)
+bool HuffmanNode::operator()(const HuffmanNode& first, const HuffmanNode& second) const
 {
 	return first.getDataRef() > second.getDataRef();
 }

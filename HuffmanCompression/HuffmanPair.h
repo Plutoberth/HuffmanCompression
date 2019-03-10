@@ -17,9 +17,9 @@ public:
 	void setFrequency(int frequency);
 
 	//Overloaded comparison ops
-	bool operator==(const HuffmanPair& other);
-	bool operator>(const HuffmanPair& other);
-	bool operator<(const HuffmanPair& other);
+	bool operator==(const HuffmanPair& other) const;
+	bool operator>(const HuffmanPair& other) const;
+	bool operator<(const HuffmanPair& other) const;
 
 private:
 	char _data;
