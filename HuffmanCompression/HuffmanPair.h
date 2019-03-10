@@ -22,5 +22,4 @@ class HuffmanPair
 private:
 	string _data;
 	int _frequency;
-
 };
