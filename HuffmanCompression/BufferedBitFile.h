@@ -1,12 +1,14 @@
 #pragma once
 #include <fstream>
+#include <vector>
 #include <bitset>
 #include <string>
-#include <map>
 
 //This buffered bit file will accept bitsets and write them to file whenever a byte (or more) accumulates.
 using std::string;
 using std::bitset;
+
+typedef uint8_t byte;
 
 //This struct will be used when you know your max size, but you don't know how many bits you'll use.
 template <size_t MAX_BITS>
@@ -33,6 +35,7 @@ public:
 private:
 	int _current_bit;
 	std::ofstream _file;
+	std::vector<byte> _buffer;
 };
 
 template<size_t MAX_BITS>
