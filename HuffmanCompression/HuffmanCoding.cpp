@@ -35,7 +35,7 @@ CharMap HuffmanCoding::getHuffmanCharMap()
 	return this->getHuffmanCharMap(*this->getHuffmanTree());
 }
 
-CharMap HuffmanCoding::getHuffmanCharMap(HuffmanNode tree)
+CharMap HuffmanCoding::getHuffmanCharMap(const HuffmanNode& tree)
 {
 	CharMap map;
 	BitArray arr;
@@ -84,7 +84,7 @@ HuffmanPriorityQueue HuffmanCoding::getFrequencyQueue()
 }
 
 //Pre-order scanning for the binary tree
-void HuffmanCoding::_scanBinaryTree(HuffmanNode* tree, CharMap & map, BitArray currentLocation)
+void HuffmanCoding::_scanBinaryTree(HuffmanNode const* tree, CharMap & map, BitArray currentLocation)
 {
 	const HuffmanPair& nodeData = tree->getDataRef();
 	if (nodeData.getData() != 0)

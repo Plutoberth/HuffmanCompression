@@ -24,10 +24,13 @@ public:
 	HuffmanNodeSmartPtr getHuffmanTree();
 	//Get the char map to encode the string to its constituent bytes.
 	CharMap getHuffmanCharMap();
-	CharMap getHuffmanCharMap(HuffmanNode tree);
+	CharMap getHuffmanCharMap(const HuffmanNode& tree);
+
+	//Write the tree and compressed text to file
+	//bool write(string filename);
 
 private:
 	string filename;
 	HuffmanPriorityQueue getFrequencyQueue();
-	void _scanBinaryTree(HuffmanNode* tree, CharMap& map, BitArray currentLocation);
+	void _scanBinaryTree(HuffmanNode const* tree, CharMap& map, BitArray currentLocation);
 };
