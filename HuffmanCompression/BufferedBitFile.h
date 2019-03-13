@@ -19,16 +19,28 @@ typedef uint8_t byte;
 /* is better for this purpose as it allows deletions both from the beginning and the end and that's useful in bit buffering.*/
 typedef std::deque<byte> BitArray;
 
+//This buffered bit file class will accept arrays of bytes, with each element as a single bit.
+//It'll write the bits to file when it reaches the threshold in bufferSize.
+//It's not responsible for an incomplete byte, and it'll not be written.
 class BufferedBitFile
 {
 public:
 	BufferedBitFile(string filename, int bufferSize);
+	~BufferedBitFile();
 
 	//Write the actual bits to the buffer
 	void write(BitArray arr);
 
-	void close();
+	//Returns whether it opened the file successfully.
+	//If a file is already open, this function will flush and close it.
+	bool open(string filename);
 	bool is_open();
+
+	//The function will return the number of bytes written to file. 
+	//It'll be called automatically when the current number of bytes is >= than the buffer size.
+	int flush();
+
+	void close();
 
 private:
 	int _bufferSize;

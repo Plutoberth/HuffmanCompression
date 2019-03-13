@@ -2,8 +2,16 @@
 
 BufferedBitFile::BufferedBitFile(string filename, int bufferSize)
 {
-	this->_file.open(filename, std::ios::binary);
+	this->open(filename);
 	this->_bufferSize = bufferSize;
+}
+
+BufferedBitFile::~BufferedBitFile()
+{
+	//Flush and close the file
+	//Note: the incomplete byte is discarded.
+	this->flush();
+	this->close();
 }
 
 void BufferedBitFile::close()
