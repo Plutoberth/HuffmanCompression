@@ -14,7 +14,7 @@ HuffmanNode::HuffmanNode(HuffmanPair pair)
 	this->_left = nullptr;
 }
 
-HuffmanNode::HuffmanNode(HuffmanPair pair, HuffmanNode * right, HuffmanNode * left)
+HuffmanNode::HuffmanNode(HuffmanPair pair, HuffmanNode * left, HuffmanNode * right)
 {
 	this->_data = pair;
 	this->_right = right;
@@ -101,17 +101,14 @@ bool HuffmanNode::operator()(const HuffmanNode* first, const HuffmanNode* second
 bool HuffmanNode::serialize(std::string filename)
 {
 	std::ofstream file(filename, std::ios::binary);
+	bool opened = file.is_open();
 	if (file.is_open())
 	{
 		this->_recursiveWrite(file, this);
-
-
-	}
-	else
-	{
-		return false;
 	}
 	
+	file.close();
+	return opened;
 }
 
 void HuffmanNode::_recursiveWrite(std::ofstream& file, HuffmanNode const* node)
@@ -123,7 +120,7 @@ void HuffmanNode::_recursiveWrite(std::ofstream& file, HuffmanNode const* node)
 	}
 	else
 	{
-		file << SERIALIZATION_SENTRY;
+		file.write((char*)&SERIALIZATION_SENTRY, 1);
 	}
 
 	if (node->getRightChild())

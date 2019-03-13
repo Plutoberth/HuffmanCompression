@@ -3,7 +3,7 @@
 #include <fstream>
 #include "HuffmanPair.h"
 
-#define SERIALIZATION_SENTRY 0b11111111
+constexpr uint8_t SERIALIZATION_SENTRY = 0xFF;
 
 using std::string;
 
@@ -13,7 +13,7 @@ public:
 	
 	HuffmanNode();
 	HuffmanNode(HuffmanPair pair);
-	HuffmanNode(HuffmanPair pair, HuffmanNode* right, HuffmanNode* left);
+	HuffmanNode(HuffmanPair pair, HuffmanNode* left, HuffmanNode* right);
 	//Copy ctor
 	HuffmanNode(const HuffmanNode& other);
 	//Move ctor - effective when transferring ownership like with rvalues
