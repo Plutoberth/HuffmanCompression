@@ -5,7 +5,7 @@ HuffmanCoding::HuffmanCoding(string file)
 	this->filename = file;
 }
 
-HuffmanNode HuffmanCoding::getHuffmanTree()
+HuffmanNodeSmartPtr HuffmanCoding::getHuffmanTree()
 {
 	HuffmanNode* first = nullptr;
 	HuffmanNode* second = nullptr;
@@ -33,12 +33,13 @@ HuffmanNode HuffmanCoding::getHuffmanTree()
 		}
 	}
 
-	return res;
+	//Because we're returning a smart ptr to a class that manages its resources, the caller doesn't need to think about memory allocations.
+	return HuffmanNodeSmartPtr(first);
 }
 
 CharMap HuffmanCoding::getHuffmanCharMap()
 {
-	return this->getHuffmanCharMap(this->getHuffmanTree());
+	return this->getHuffmanCharMap(*this->getHuffmanTree());
 }
 
 CharMap HuffmanCoding::getHuffmanCharMap(HuffmanNode tree)
