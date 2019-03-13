@@ -8,6 +8,8 @@
 
 using std::string;
 
+#define BYTE_SIZE 8
+
 typedef uint8_t byte;
 
 /*I elected to use a deque of bytes for my bit array. This was chosen because the efficiency of
@@ -29,7 +31,7 @@ public:
 	~BufferedBitFile();
 
 	//Write the actual bits to the buffer
-	void write(const BitArray arr);
+	void write(const BitArray& arr);
 
 	//Returns whether it opened the file successfully.
 	//If a file is already open, this function will flush and close it.
@@ -46,7 +48,7 @@ private:
 	int _bufferSize;
 	byte _workingByte;
 	//No reason to use a whole byte for a value that can only be 0-7
-	uint8_t _current_bit;
+	uint8_t _nextBit;
 	std::ofstream _file;
 	std::vector<byte> _buffer;
 };

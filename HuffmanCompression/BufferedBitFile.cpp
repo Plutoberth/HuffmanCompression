@@ -14,6 +14,34 @@ BufferedBitFile::~BufferedBitFile()
 	this->close();
 }
 
+void BufferedBitFile::write(const BitArray& arr)
+{
+	for (auto bit: arr)
+	{
+		if (this->_nextBit == BYTE_SIZE)
+		{
+			//Add byte to byte array and reset values
+			this->_buffer.push_back(this->_workingByte);
+			this->_workingByte = 0;
+			this->_nextBit = 0;
+		}
+
+		//Shift left by one bit
+		this->_workingByte << 1;
+		if (bit) //avoids errors with nonbinary values
+		{
+			this->_workingByte | 1;
+		}
+		this->_nextBit++;
+	}
+
+	//Flush if buffer size is >= max buffer size received in ctor
+	if (this->_buffer.size() >= this->_bufferSize)
+	{
+		this->flush();
+	}
+}
+
 int BufferedBitFile::flush()
 {
 	int bytesWritten = 0;
