@@ -24,13 +24,6 @@ HuffmanNodeSmartPtr HuffmanCoding::getHuffmanTree()
 			pqueue.push(new HuffmanNode(HuffmanPair(0, first->getDataRef().getFrequency() + second->getDataRef().getFrequency()),
 				first, second));
 		}
-		else
-		{
-			//Store our result as raw data
-			res = *first;
-			//Make sure to free up the memory because we're no longer dealing with those pointers
-			delete first;
-		}
 	}
 
 	//Because we're returning a smart ptr to a class that manages its resources, the caller doesn't need to think about memory allocations.
