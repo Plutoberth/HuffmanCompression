@@ -97,3 +97,41 @@ bool HuffmanNode::operator()(const HuffmanNode* first, const HuffmanNode* second
 {
 	return first->getDataRef() > second->getDataRef();
 }
+
+bool HuffmanNode::serialize(std::string filename)
+{
+	std::ofstream file(filename, std::ios::binary);
+	if (file.is_open())
+	{
+		this->_recursiveWrite(file, this);
+
+
+	}
+	else
+	{
+		return false;
+	}
+	
+}
+
+void HuffmanNode::_recursiveWrite(std::ofstream& file, HuffmanNode const* node)
+{
+	file << node->getDataRef().getData();
+	if (node->getLeftChild())
+	{
+		HuffmanNode::_recursiveWrite(file, node->getLeftChild());
+	}
+	else
+	{
+		file << SERIALIZATION_SENTRY;
+	}
+
+	if (node->getRightChild())
+	{
+		HuffmanNode::_recursiveWrite(file, node->getRightChild());
+	}
+	else
+	{
+		file << SERIALIZATION_SENTRY;
+	}
+}

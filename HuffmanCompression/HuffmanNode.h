@@ -1,6 +1,9 @@
 #pragma once
 
+#include <fstream>
 #include "HuffmanPair.h"
+
+#define SERIALIZATION_SENTRY 0b11111111
 
 using std::string;
 
@@ -32,7 +35,12 @@ public:
 	//Comparison op for huffman node with huffman data
 	bool operator() (const HuffmanNode* first, const HuffmanNode* second) const;
 
+	//Returns the success of the operation
+	bool serialize(std::string file);
+
 private:
+	static void _recursiveWrite(std::ofstream& file, HuffmanNode const* node);
+
 	HuffmanPair _data;
 	HuffmanNode* _right;
 	HuffmanNode* _left;
