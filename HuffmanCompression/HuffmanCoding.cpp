@@ -36,6 +36,20 @@ HuffmanNode HuffmanCoding::getHuffmanTree()
 	return res;
 }
 
+CharMap HuffmanCoding::getHuffmanCharMap()
+{
+	return this->getHuffmanCharMap(this->getHuffmanTree());
+}
+
+CharMap HuffmanCoding::getHuffmanCharMap(HuffmanNode tree)
+{
+	CharMap map;
+	BitArray arr;
+	//Scan the binary tree with our function
+	this->_scanBinaryTree(&tree, map, arr);
+	return map;
+}
+
 HuffmanPriorityQueue HuffmanCoding::getFrequencyQueue()
 {
 	//A sorted map to store our frequencies
@@ -73,4 +87,31 @@ HuffmanPriorityQueue HuffmanCoding::getFrequencyQueue()
 	}*/
 
 	return pqueue;
+}
+
+//Pre-order scanning for the binary tree
+void HuffmanCoding::_scanBinaryTree(HuffmanNode* tree, CharMap & map, BitArray currentLocation)
+{
+	const HuffmanPair& nodeData = tree->getDataRef();
+	if (nodeData.getData() != 0)
+	{
+		map[nodeData.getData()] = currentLocation;
+	}
+	
+	//Scan left child
+	if (tree->getLeftChild())
+	{
+		//Add a 0 to signify a left turn and send the bit vector, then pop it
+		currentLocation.push_back(0);
+		this->_scanBinaryTree(tree->getLeftChild(), map, currentLocation);
+		currentLocation.pop_back();
+	}
+
+	if (tree->getRightChild())
+	{
+		//Add a 1 to signify a right turn and then send the bit vector.
+		//No need to pop it as it dies in the next line anyway.
+		currentLocation.push_back(1);
+		this->_scanBinaryTree(tree->getRightChild(), map, currentLocation);
+	}
 }

@@ -16,13 +16,15 @@ typedef std::map<char, BitArray> CharMap;
 class HuffmanCoding
 {
 public:
-	HuffmanCoding(string file);
+	HuffmanCoding(string filename);
 
 	HuffmanNode getHuffmanTree();
 	//Get the char map to encode the string to its constituent bytes.
-	//CharMap getHuffmanCharMap();
+	CharMap getHuffmanCharMap();
+	CharMap getHuffmanCharMap(HuffmanNode tree);
 
 private:
 	string filename;
 	HuffmanPriorityQueue getFrequencyQueue();
+	void _scanBinaryTree(HuffmanNode* tree, CharMap& map, BitArray currentLocation);
 };
