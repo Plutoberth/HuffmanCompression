@@ -14,6 +14,19 @@ BufferedBitFile::~BufferedBitFile()
 	this->close();
 }
 
+int BufferedBitFile::flush()
+{
+	int bytesWritten = 0;
+	if (this->_file.is_open())
+	{
+		//Cast byte ptr to const char*. Both are of the same size so this works well.
+		this->_file.write((const char*) this->_buffer.data(), this->_buffer.size());
+		bytesWritten = this->_buffer.size();
+		this->_buffer.clear();
+	}
+	return bytesWritten;
+}
+
 void BufferedBitFile::close()
 {
 	this->flush();
