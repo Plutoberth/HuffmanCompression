@@ -22,8 +22,6 @@ public:
 	//Get the char map to encode the string to its constituent bytes.
 	//CharMap getHuffmanCharMap();
 
-	
-
 private:
 	string filename;
 	HuffmanPriorityQueue getFrequencyQueue();

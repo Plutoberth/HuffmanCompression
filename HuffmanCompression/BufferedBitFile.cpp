@@ -4,6 +4,8 @@ BufferedBitFile::BufferedBitFile(string filename, int bufferSize)
 {
 	this->open(filename);
 	this->_bufferSize = bufferSize;
+	//Allocate now for performance reasons. This isn't significant unless the bufferSize is really large.
+	this->_buffer.reserve(bufferSize);
 }
 
 BufferedBitFile::~BufferedBitFile()
@@ -28,7 +30,7 @@ void BufferedBitFile::write(const BitArray& arr)
 
 		//Shift left by one bit
 		this->_workingByte << 1;
-		if (bit) //avoids errors with nonbinary values
+		if (bit) //Makes our class more generic
 		{
 			this->_workingByte | 1;
 		}
