@@ -23,7 +23,7 @@ typedef std::vector<byte> BitArray;
 class BufferedBitFile
 {
 public:
-	BufferedBitFile(string filename, int bufferSize);
+	BufferedBitFile(string filename, unsigned int bufferSize);
 	~BufferedBitFile();
 
 	//Write the actual bits to the buffer
@@ -41,7 +41,7 @@ public:
 	void close();
 
 private:
-	int _bufferSize;
+	unsigned int _bufferSize;
 	byte _workingByte;
 	//No reason to use a whole byte for a value that can only be 0-7
 	uint8_t _nextBit;

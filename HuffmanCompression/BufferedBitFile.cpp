@@ -1,6 +1,6 @@
 #include "BufferedBitFile.h"
 
-BufferedBitFile::BufferedBitFile(string filename, int bufferSize)
+BufferedBitFile::BufferedBitFile(string filename, unsigned int bufferSize)
 {
 	this->open(filename);
 	this->_bufferSize = bufferSize;
