@@ -29,12 +29,12 @@ public:
 	~BufferedBitFile();
 
 	//Write the actual bits to the buffer
-	void write(BitArray arr);
+	void write(const BitArray arr);
 
 	//Returns whether it opened the file successfully.
 	//If a file is already open, this function will flush and close it.
-	bool open(string filename);
-	bool is_open();
+	bool open(const string filename);
+	bool is_open() const;
 
 	//The function will return the number of bytes written to file. 
 	//It'll be called automatically when the current number of bytes is >= than the buffer size.

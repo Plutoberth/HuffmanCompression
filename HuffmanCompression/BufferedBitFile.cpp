@@ -33,14 +33,14 @@ void BufferedBitFile::close()
 	this->_file.close();
 }
 
-bool BufferedBitFile::open(string filename)
+bool BufferedBitFile::open(const string filename)
 {
 	this->close();
 	this->_file.open(filename, std::ios::binary);
 	return this->_file.is_open();
 }
 
-bool BufferedBitFile::is_open()
+bool BufferedBitFile::is_open() const
 {
 	return this->_file.is_open();
 }
