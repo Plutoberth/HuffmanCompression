@@ -16,7 +16,15 @@ BufferedBitFile::~BufferedBitFile()
 
 void BufferedBitFile::close()
 {
+	this->flush();
 	this->_file.close();
+}
+
+bool BufferedBitFile::open(string filename)
+{
+	this->close();
+	this->_file.open(filename, std::ios::binary);
+	return this->_file.is_open();
 }
 
 bool BufferedBitFile::is_open()
