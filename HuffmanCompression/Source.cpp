@@ -6,6 +6,7 @@ int main()
 	HuffmanCoding huffman("C:/Users/Nir/Documents/test.txt");
 	HuffmanNodeSmartPtr node = huffman.getHuffmanTree();
 	CharMap map = huffman.getHuffmanCharMap(*node);
-	node->serialize("C:/Users/Nir/Documents/serializetest.dat");
+	BufferedBitFile file("C:/Users/Nir/Documents/bitdata.dat");
+	file.write(node->serialize());
 	return 0;
 }
