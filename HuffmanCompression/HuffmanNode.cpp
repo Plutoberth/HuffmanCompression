@@ -20,6 +20,11 @@ HuffmanNode::HuffmanNode(HuffmanPair pair, HuffmanNode * left, HuffmanNode * rig
 	this->_left = left;
 }
 
+HuffmanNode::HuffmanNode(byteArray binaryRep)
+{
+	this->_recursiveDeserialization(binaryRep, this);
+}
+
 HuffmanNode::HuffmanNode(const HuffmanNode & other)
 {
 	this->_right = nullptr;
@@ -126,7 +131,32 @@ void HuffmanNode::_recursiveSerialization(byteArray& tree, HuffmanNode const* no
 	}
 }
 
-void HuffmanNode::_recursiveDeserialization(const byteArray& rep)
+void HuffmanNode::_recursiveDeserialization(const byteArray& rep, HuffmanNode* currentNode)
 {
+	static int location = 0;
+
+	currentNode->_data = {rep[location++], 0 };
+
+	//Left side isn't present
+	if (rep[location] == SERIALIZATION_SENTRY)
+	{
+		location++;
+	}
+	else
+	{
+		this->_left = new HuffmanNode();
+		HuffmanNode::_recursiveDeserialization(rep, this->_left);
+	}
+
+	//Right side isn't present
+	if (rep[location] == SERIALIZATION_SENTRY)
+	{
+		location++;
+	}
+	else
+	{
+		this->_right = new HuffmanNode();
+		HuffmanNode::_recursiveDeserialization(rep, this->_right);
+	}
 
 }

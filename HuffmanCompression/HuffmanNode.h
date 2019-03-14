@@ -45,8 +45,7 @@ public:
 
 private:
 	static void _recursiveSerialization(byteArray& tree, HuffmanNode const* node);
-	void _recursiveDeserialization(const byteArray& rep);
-	int _deserializeLocation = 0;
+	void _recursiveDeserialization(const byteArray& rep, HuffmanNode* currentNode);
 	HuffmanPair _data;
 	HuffmanNode* _right;
 	HuffmanNode* _left;
