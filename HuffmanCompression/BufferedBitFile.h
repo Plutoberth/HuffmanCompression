@@ -30,6 +30,7 @@ public:
 	//Write the actual bits to the buffer
 	void write(const bitArray& arr);
 	void write(const byteArray& arr);
+	void write(const char* s, int n);
 
 	//If a file is already open, this function will flush and close it.
 	void open(const string filename);

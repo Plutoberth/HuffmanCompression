@@ -55,6 +55,16 @@ void BufferedBitFile::write(const byteArray & arr)
 	}
 }
 
+void BufferedBitFile::write(const char* s, int n)
+{
+	this->_buffer.insert(this->_buffer.end(), s, s + n);
+
+	if (this->_buffer.size() >= this->_bufferSize)
+	{
+		this->flush();
+	}
+}
+
 int BufferedBitFile::flush()
 {
 	int bytesWritten = 0;
