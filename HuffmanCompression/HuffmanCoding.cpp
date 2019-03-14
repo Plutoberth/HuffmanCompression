@@ -86,16 +86,21 @@ HuffmanPriorityQueue HuffmanCoding::getFrequencyQueue()
 	std::map<char, int> frequencyMap;
 	//Input stream to read the file
 	std::ifstream datafile(this->filename);
+	char buffer[DEFAULT_BUFFER_SIZE] = { 0 };
 	HuffmanPriorityQueue pqueue;
 	char currentChar;
 
 	//Make sure that we opened the file
 	if (datafile.is_open())
 	{
-		//Iterate over the file, char by char, without skipping whitespace
-		while (datafile >> std::noskipws >> currentChar)
+		//Iterate over the file char by char
+		while (!datafile.eof())
 		{
-			frequencyMap[currentChar]++;
+			datafile.read(buffer, DEFAULT_BUFFER_SIZE - 1);
+			for (size_t i = 0; i < DEFAULT_BUFFER_SIZE - 1; i++)
+			{
+				frequencyMap[currentChar]++;
+			}
 		}
 	}
 	else

@@ -9,7 +9,7 @@
 using std::string;
 
 #define BYTE_SIZE 8
-#define DEFAULT_BUFFER_SIZE 1024
+#define DEFAULT_BUFFER_SIZE 4096
 
 typedef uint8_t byte;
 typedef bool bit;
