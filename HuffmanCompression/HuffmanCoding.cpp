@@ -46,11 +46,10 @@ CharMap HuffmanCoding::getHuffmanCharMap(const HuffmanNode& tree)
 
 bool HuffmanCoding::write(string filename)
 {
-	//[2 BYTES: Size of binary tree][Binary tree][4 BYTES: Length of data in bits][Huffman data] 
+	//[2 BYTES: Size of binary tree][Binary tree][Huffman data][1 BYTE: Bits filled in the last byte]
 
-	bitArray huffmanBits;
 	uint16_t sizeOfTree = 0;
-	uint32_t sizeOfHuffmanBits = 0;
+	uint8_t bitsFilled = 0;
 	BufferedBitFile file(filename);
 	std::ifstream fileToEncode(this->filename); //file to encode the contents of
 	bool success = file.is_open() && fileToEncode.is_open();
@@ -71,13 +70,11 @@ bool HuffmanCoding::write(string filename)
 		//Go over chars and encode
 		while (fileToEncode >> std::noskipws >> currentChar)
 		{
-			huffmanBits.insert(huffmanBits.end(), map[currentChar].begin(), map[currentChar].end());
+			file.write(map[currentChar]);
 		}
 
-		sizeOfHuffmanBits = huffmanBits.size();
-		file.write((byte*) &sizeOfHuffmanBits, sizeof(uint32_t));
-		file.write(huffmanBits);
-		file.flush_and_fill(0);
+		bitsFilled = file.flush_and_fill(0);
+		file.write((byte*)&bitsFilled, sizeof(uint8_t));
 	}
 
 	return success;

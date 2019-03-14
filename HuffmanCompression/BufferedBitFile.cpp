@@ -80,6 +80,7 @@ int BufferedBitFile::flush()
 
 int BufferedBitFile::flush_and_fill(bit fillingBit)
 {
+	int bitsFilled = 0;
 	if (this->_nextBit != 0)
 	{
 		while (this->_nextBit)
@@ -90,6 +91,7 @@ int BufferedBitFile::flush_and_fill(bit fillingBit)
 				this->_workingByte |= 1;
 			}
 			this->_nextBit++;
+			bitsFilled++;
 		}
 
 		//Add byte to byte array and reset values
@@ -97,8 +99,9 @@ int BufferedBitFile::flush_and_fill(bit fillingBit)
 		this->_workingByte = 0;
 		this->_nextBit = 0;
 	}
-	
-	return this->flush();
+	this->flush();
+
+	return bitsFilled;
 }
 
 void BufferedBitFile::close()
