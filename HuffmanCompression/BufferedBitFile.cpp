@@ -29,10 +29,10 @@ void BufferedBitFile::write(const bitArray& arr)
 		}
 
 		//Shift left by one bit
-		this->_workingByte << 1;
+		this->_workingByte = this->_workingByte << 1;
 		if (bit) //Makes our class more generic
 		{
-			this->_workingByte | 1;
+			this->_workingByte |= 1;
 		}
 		this->_nextBit++;
 	}
@@ -84,10 +84,10 @@ int BufferedBitFile::flush_and_fill(bit fillingBit)
 	{
 		while (this->_nextBit)
 		{
-			this->_workingByte << 1;
+			this->_workingByte = this->_workingByte << 1;
 			if (fillingBit)
 			{
-				this->_workingByte | fillingBit;
+				this->_workingByte |= 1;
 			}
 			this->_nextBit++;
 		}

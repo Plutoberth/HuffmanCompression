@@ -48,19 +48,38 @@ bool HuffmanCoding::write(string filename)
 {
 	//[2 BYTES: Size of binary tree][Binary tree][4 BYTES: Length of data in bits][Huffman data] 
 
+	bitArray huffmanBits;
 	uint16_t sizeOfTree = 0;
+	uint32_t sizeOfHuffmanBits = 0;
 	BufferedBitFile file(filename);
-	bool success = file.is_open();
+	std::ifstream fileToEncode(this->filename); //file to encode the contents of
+	bool success = file.is_open() && fileToEncode.is_open();
+	char currentChar = 0;
 	
+	//If both files could be opened
 	if (success)
 	{
 		HuffmanNodeSmartPtr tree = this->getHuffmanTree();
 		byteArray treeBytes = tree->serialize();
 		CharMap map = this->getHuffmanCharMap(*tree);
 		sizeOfTree = treeBytes.size();
+
+		//Write the size of the tree
 		file.write((byte*) &sizeOfTree, sizeof(uint16_t));
 		file.write(treeBytes);
+
+		//Go over chars and encode
+		while (fileToEncode >> std::noskipws >> currentChar)
+		{
+			huffmanBits.insert(huffmanBits.end(), map[currentChar].begin(), map[currentChar].end());
+		}
+
+		sizeOfHuffmanBits = huffmanBits.size();
+		file.write((byte*) &sizeOfHuffmanBits, sizeof(uint32_t));
+		file.write(huffmanBits);
+		file.flush_and_fill(0);
 	}
+
 	return success;
 }
 
