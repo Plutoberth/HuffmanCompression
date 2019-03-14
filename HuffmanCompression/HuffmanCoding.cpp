@@ -55,9 +55,11 @@ bool HuffmanCoding::write(string filename)
 	if (success)
 	{
 		HuffmanNodeSmartPtr tree = this->getHuffmanTree();
-		byteArray bytes = tree->serialize();
+		byteArray treeBytes = tree->serialize();
 		CharMap map = this->getHuffmanCharMap(*tree);
-		
+		sizeOfTree = treeBytes.size();
+		file.write((byte*) &sizeOfTree, sizeof(uint16_t));
+		file.write(treeBytes);
 	}
 	return success;
 }
