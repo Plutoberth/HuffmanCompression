@@ -12,10 +12,10 @@ using std::string;
 
 typedef uint8_t byte;
 
-/*TODO: Check whether a vector<bool> or a vector<byte> are faster
-/*This might seem obvious, but vector<bool> has a specialization that makes it store each bool as a single bit.
-/*It makes it much more space efficient, but I need to check if the performance decrease isn't significant.*/
-typedef std::vector<byte> BitArray;
+/*TODO: Check whether a vector<bool> or a vector<byte> are faster*/
+typedef std::vector<bool> bitArray;
+
+typedef std::vector<byte> byteArray;
 
 //This buffered bit file class will accept arrays of bytes, with each element as a single bit.
 //It'll write the bits to file when it reaches the threshold in bufferSize.
@@ -27,7 +27,8 @@ public:
 	~BufferedBitFile();
 
 	//Write the actual bits to the buffer
-	void write(const BitArray& arr);
+	void write(const bitArray& arr);
+	void write(const byteArray& arr);
 
 	//Returns whether it opened the file successfully.
 	//If a file is already open, this function will flush and close it.
@@ -46,5 +47,5 @@ private:
 	//No reason to use a whole byte for a value that can only be 0-7
 	uint8_t _nextBit;
 	std::ofstream _file;
-	std::vector<byte> _buffer;
+	byteArray _buffer;
 };

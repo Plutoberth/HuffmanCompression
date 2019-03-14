@@ -16,7 +16,7 @@ BufferedBitFile::~BufferedBitFile()
 	this->close();
 }
 
-void BufferedBitFile::write(const BitArray& arr)
+void BufferedBitFile::write(const bitArray& arr)
 {
 	for (auto bit: arr)
 	{
@@ -37,6 +37,17 @@ void BufferedBitFile::write(const BitArray& arr)
 		this->_nextBit++;
 	}
 
+	//Flush if buffer size is >= max buffer size received in ctor
+	if (this->_buffer.size() >= this->_bufferSize)
+	{
+		this->flush();
+	}
+}
+
+void BufferedBitFile::write(const byteArray & arr)
+{
+	//Concatenate the byte vectors
+	this->_buffer.insert(this->_buffer.end(), arr.begin(), arr.end());
 	//Flush if buffer size is >= max buffer size received in ctor
 	if (this->_buffer.size() >= this->_bufferSize)
 	{
