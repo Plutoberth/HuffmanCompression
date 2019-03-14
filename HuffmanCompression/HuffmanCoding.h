@@ -14,7 +14,7 @@ typedef std::priority_queue<HuffmanNode*, std::vector<HuffmanNode*>, HuffmanNode
 typedef std::unique_ptr<HuffmanNode> HuffmanNodeSmartPtr;
 
 //A charmap to encode the char to its bit value
-typedef std::map<char, BitArray> CharMap;
+typedef std::map<char, bitArray> CharMap;
 
 class HuffmanCoding
 {
@@ -24,13 +24,13 @@ public:
 	HuffmanNodeSmartPtr getHuffmanTree();
 	//Get the char map to encode the string to its constituent bytes.
 	CharMap getHuffmanCharMap();
-	CharMap getHuffmanCharMap(const HuffmanNode& tree);
+	static CharMap getHuffmanCharMap(const HuffmanNode& tree);
 
 	//Write the tree and compressed text to file
-	//bool write(string filename);
+	bool write(string filename);
 
 private:
 	string filename;
 	HuffmanPriorityQueue getFrequencyQueue();
-	void _scanBinaryTree(HuffmanNode const* tree, CharMap& map, BitArray currentLocation);
+	static void _scanBinaryTree(HuffmanNode const* tree, CharMap& map, bitArray currentLocation);
 };

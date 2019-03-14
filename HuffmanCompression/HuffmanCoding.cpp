@@ -38,10 +38,28 @@ CharMap HuffmanCoding::getHuffmanCharMap()
 CharMap HuffmanCoding::getHuffmanCharMap(const HuffmanNode& tree)
 {
 	CharMap map;
-	BitArray arr;
+	bitArray arr;
 	//Scan the binary tree with our function
-	this->_scanBinaryTree(&tree, map, arr);
+	HuffmanCoding::_scanBinaryTree(&tree, map, arr);
 	return map;
+}
+
+bool HuffmanCoding::write(string filename)
+{
+	//[2 BYTES: Size of binary tree][Binary tree][4 BYTES: Length of data in bits][Huffman data] 
+
+	uint16_t sizeOfTree = 0;
+	BufferedBitFile file(filename);
+	bool success = file.is_open();
+	
+	if (success)
+	{
+		HuffmanNodeSmartPtr tree = this->getHuffmanTree();
+		byteArray bytes = tree->serialize();
+		CharMap map = this->getHuffmanCharMap(*tree);
+		file.write()
+	}
+	return success;
 }
 
 HuffmanPriorityQueue HuffmanCoding::getFrequencyQueue()
@@ -73,18 +91,11 @@ HuffmanPriorityQueue HuffmanCoding::getFrequencyQueue()
 		pqueue.push(new HuffmanNode(HuffmanPair(pair.first, pair.second)));
 	}
 
-	//Some temporary printing code
-	/*while (!pqueue.empty())
-	{
-		std::cout << pqueue.top()->getDataRef().getData() << " : " << pqueue.top()->getDataRef().getFrequency() << std::endl;
-		pqueue.pop();
-	}*/
-
 	return pqueue;
 }
 
 //Pre-order scanning for the binary tree
-void HuffmanCoding::_scanBinaryTree(HuffmanNode const* tree, CharMap & map, BitArray currentLocation)
+void HuffmanCoding::_scanBinaryTree(HuffmanNode const* tree, CharMap & map, bitArray currentLocation)
 {
 	const HuffmanPair& nodeData = tree->getDataRef();
 	if (nodeData.getData() != 0)
@@ -97,7 +108,7 @@ void HuffmanCoding::_scanBinaryTree(HuffmanNode const* tree, CharMap & map, BitA
 	{
 		//Add a 0 to signify a left turn and send the bit vector, then pop it
 		currentLocation.push_back(0);
-		this->_scanBinaryTree(tree->getLeftChild(), map, currentLocation);
+		HuffmanCoding::_scanBinaryTree(tree->getLeftChild(), map, currentLocation);
 		currentLocation.pop_back();
 	}
 
@@ -106,6 +117,6 @@ void HuffmanCoding::_scanBinaryTree(HuffmanNode const* tree, CharMap & map, BitA
 		//Add a 1 to signify a right turn and then send the bit vector.
 		//No need to pop it as it dies in the next line anyway.
 		currentLocation.push_back(1);
-		this->_scanBinaryTree(tree->getRightChild(), map, currentLocation);
+		HuffmanCoding::_scanBinaryTree(tree->getRightChild(), map, currentLocation);
 	}
 }
