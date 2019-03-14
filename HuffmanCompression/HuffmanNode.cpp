@@ -125,3 +125,8 @@ void HuffmanNode::_recursiveSerialization(byteArray& tree, HuffmanNode const* no
 		tree.push_back(SERIALIZATION_SENTRY);
 	}
 }
+
+void HuffmanNode::_recursiveDeserialization(const byteArray& rep)
+{
+
+}

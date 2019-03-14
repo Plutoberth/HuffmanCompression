@@ -16,6 +16,9 @@ public:
 	HuffmanNode();
 	HuffmanNode(HuffmanPair pair);
 	HuffmanNode(HuffmanPair pair, HuffmanNode* left, HuffmanNode* right);
+
+	//Deserializing ctor
+	HuffmanNode(byteArray binaryRep);
 	//Copy ctor
 	HuffmanNode(const HuffmanNode& other);
 	//Move ctor - effective when transferring ownership like with rvalues
@@ -42,7 +45,8 @@ public:
 
 private:
 	static void _recursiveSerialization(byteArray& tree, HuffmanNode const* node);
-
+	void _recursiveDeserialization(const byteArray& rep);
+	int _deserializeLocation = 0;
 	HuffmanPair _data;
 	HuffmanNode* _right;
 	HuffmanNode* _left;
