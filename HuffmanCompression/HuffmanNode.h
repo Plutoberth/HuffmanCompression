@@ -1,8 +1,9 @@
 #pragma once
 
 #include <fstream>
-#include "HuffmanPair.h"
 #include "BufferedBitFile.h"
+
+typedef std::pair<char, int> HuffmanPair;
 
 constexpr uint8_t SERIALIZATION_SENTRY = 0xFF;
 

@@ -21,7 +21,7 @@ HuffmanNodeSmartPtr HuffmanCoding::getHuffmanTree()
 			second = pqueue.top();
 			pqueue.pop();
 			//Create a new huffman node with the combined frequencies
-			pqueue.push(new HuffmanNode(HuffmanPair(0, first->getDataRef().getFrequency() + second->getDataRef().getFrequency()),
+			pqueue.push(new HuffmanNode(HuffmanPair(0, first->getDataRef().second + second->getDataRef().second),
 				first, second));
 		}
 	}
@@ -119,9 +119,9 @@ HuffmanPriorityQueue HuffmanCoding::getFrequencyQueue()
 void HuffmanCoding::_scanBinaryTree(HuffmanNode const* tree, CharMap & map, bitArray currentLocation)
 {
 	const HuffmanPair& nodeData = tree->getDataRef();
-	if (nodeData.getData() != 0)
+	if (nodeData.first != 0)
 	{
-		map[nodeData.getData()] = currentLocation;
+		map[nodeData.first] = currentLocation;
 	}
 	
 	//Scan left child

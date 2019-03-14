@@ -94,7 +94,7 @@ void HuffmanNode::setLeftChild(HuffmanNode* node)
 
 bool HuffmanNode::operator()(const HuffmanNode* first, const HuffmanNode* second) const
 {
-	return first->getDataRef() > second->getDataRef();
+	return first->getDataRef().second > second->getDataRef().second;
 }
 
 byteArray HuffmanNode::serialize()
@@ -106,7 +106,7 @@ byteArray HuffmanNode::serialize()
 
 void HuffmanNode::_recursiveSerialization(byteArray& tree, HuffmanNode const* node)
 {
-	tree.push_back(node->getDataRef().getData());
+	tree.push_back(node->getDataRef().first);
 	if (node->getLeftChild())
 	{
 		HuffmanNode::_recursiveSerialization(tree, node->getLeftChild());
