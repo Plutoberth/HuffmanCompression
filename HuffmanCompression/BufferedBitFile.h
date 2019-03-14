@@ -21,7 +21,7 @@ typedef std::vector<byte> byteArray;
 //This buffered bit file class will accept arrays of bytes, with each element as a single bit.
 //It'll write the bits to file when it reaches the threshold in bufferSize.
 //It's not responsible for an incomplete byte, and it'll not be written.
-class BufferedBitFile
+class BufferedBitFile : public std::ofstream
 {
 public:
 	BufferedBitFile(string filename, unsigned int bufferSize=DEFAULT_BUFFER_SIZE);
@@ -31,10 +31,8 @@ public:
 	void write(const bitArray& arr);
 	void write(const byteArray& arr);
 
-	//Returns whether it opened the file successfully.
 	//If a file is already open, this function will flush and close it.
-	bool open(const string filename);
-	bool is_open() const;
+	void open(const string filename);
 
 	//The function will return the number of bytes written to file. 
 	//It'll be called automatically when the current number of bytes is >= than the buffer size.
@@ -47,6 +45,5 @@ private:
 	byte _workingByte;
 	//No reason to use a whole byte for a value that can only be 0-7
 	uint8_t _nextBit;
-	std::ofstream _file;
 	byteArray _buffer;
 };

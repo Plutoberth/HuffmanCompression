@@ -1,8 +1,8 @@
 #include "BufferedBitFile.h"
 
 BufferedBitFile::BufferedBitFile(string filename, unsigned int bufferSize)
+	: std::ofstream(filename, std::ios::binary)
 {
-	this->open(filename);
 	this->_bufferSize = bufferSize;
 	//Allocate now for performance reasons. This isn't significant unless the bufferSize is really large.
 	this->_buffer.reserve(bufferSize);
@@ -58,10 +58,10 @@ void BufferedBitFile::write(const byteArray & arr)
 int BufferedBitFile::flush()
 {
 	int bytesWritten = 0;
-	if (this->_file.is_open())
+	if (this->is_open())
 	{
 		//Cast byte ptr to const char*. Both are of the same size so this works well.
-		this->_file.write((const char*) this->_buffer.data(), this->_buffer.size());
+		std::ofstream::write((const char*) this->_buffer.data(), this->_buffer.size());
 		bytesWritten = this->_buffer.size();
 		this->_buffer.clear();
 	}
@@ -71,17 +71,11 @@ int BufferedBitFile::flush()
 void BufferedBitFile::close()
 {
 	this->flush();
-	this->_file.close();
+	std::ofstream::close();
 }
 
-bool BufferedBitFile::open(const string filename)
+void BufferedBitFile::open(const string filename)
 {
 	this->close();
-	this->_file.open(filename, std::ios::binary);
-	return this->_file.is_open();
-}
-
-bool BufferedBitFile::is_open() const
-{
-	return this->_file.is_open();
+	std::ofstream::open(filename, std::ios::binary);
 }
