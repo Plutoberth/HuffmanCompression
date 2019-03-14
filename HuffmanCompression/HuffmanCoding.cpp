@@ -70,8 +70,9 @@ bool HuffmanCoding::write(string filename)
 		//Go over chars and encode
 		while (!fileToEncode.eof())
 		{
+			memset(buffer, NULL, DEFAULT_BUFFER_SIZE);
 			fileToEncode.read(buffer, DEFAULT_BUFFER_SIZE - 1);
-			for (size_t i = 0; i < DEFAULT_BUFFER_SIZE - 1; i++)
+			for (size_t i = 0; buffer[i] != NULL; i++)
 			{
 				file.write(map[buffer[i]]);
 			}
@@ -99,8 +100,9 @@ HuffmanPriorityQueue HuffmanCoding::getFrequencyQueue()
 		//Iterate over the file char by char
 		while (!datafile.eof())
 		{
+			memset(buffer, NULL, DEFAULT_BUFFER_SIZE);
 			datafile.read(buffer, DEFAULT_BUFFER_SIZE - 1);
-			for (size_t i = 0; i < DEFAULT_BUFFER_SIZE - 1; i++)
+			for (size_t i = 0; buffer[i] != NULL; i++)
 			{
 				frequencyMap[buffer[i]]++;
 			}
