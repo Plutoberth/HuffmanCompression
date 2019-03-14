@@ -2,9 +2,11 @@
 
 #include <fstream>
 #include "HuffmanPair.h"
+#include <vector>
 
 constexpr uint8_t SERIALIZATION_SENTRY = 0xFF;
 
+typedef std::vector<uint8_t> serializedTree;
 using std::string;
 
 class HuffmanNode
@@ -36,10 +38,10 @@ public:
 	bool operator() (const HuffmanNode* first, const HuffmanNode* second) const;
 
 	//Returns the success of the operation
-	bool serialize(std::string file);
+	serializedTree serialize(std::string file);
 
 private:
-	static void _recursiveWrite(std::ofstream& file, HuffmanNode const* node);
+	static void _recursiveSerialization(serializedTree& tree, HuffmanNode const* node);
 
 	HuffmanPair _data;
 	HuffmanNode* _right;

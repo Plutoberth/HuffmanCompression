@@ -97,37 +97,31 @@ bool HuffmanNode::operator()(const HuffmanNode* first, const HuffmanNode* second
 	return first->getDataRef() > second->getDataRef();
 }
 
-bool HuffmanNode::serialize(std::string filename)
+serializedTree HuffmanNode::serialize(std::string filename)
 {
-	std::ofstream file(filename, std::ios::binary);
-	bool opened = file.is_open();
-	if (file.is_open())
-	{
-		this->_recursiveWrite(file, this);
-	}
-	
-	file.close();
-	return opened;
+	serializedTree tree;
+	this->_recursiveSerialization(tree, this);
+	return tree;
 }
 
-void HuffmanNode::_recursiveWrite(std::ofstream& file, HuffmanNode const* node)
+void HuffmanNode::_recursiveSerialization(serializedTree& tree, HuffmanNode const* node)
 {
-	file << node->getDataRef().getData();
+	tree.push_back(node->getDataRef().getData());
 	if (node->getLeftChild())
 	{
-		HuffmanNode::_recursiveWrite(file, node->getLeftChild());
+		HuffmanNode::_recursiveSerialization(tree, node->getLeftChild());
 	}
 	else
 	{
-		file.write((char*)&SERIALIZATION_SENTRY, 1);
+		tree.push_back(SERIALIZATION_SENTRY);
 	}
 
 	if (node->getRightChild())
 	{
-		HuffmanNode::_recursiveWrite(file, node->getRightChild());
+		HuffmanNode::_recursiveSerialization(tree, node->getRightChild());
 	}
 	else
 	{
-		file << SERIALIZATION_SENTRY;
+		tree.push_back(SERIALIZATION_SENTRY);
 	}
 }
