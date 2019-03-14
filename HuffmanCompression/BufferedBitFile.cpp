@@ -78,6 +78,29 @@ int BufferedBitFile::flush()
 	return bytesWritten;
 }
 
+int BufferedBitFile::flush_and_fill(bit fillingBit)
+{
+	if (this->_nextBit != 0)
+	{
+		while (this->_nextBit)
+		{
+			this->_workingByte << 1;
+			if (fillingBit)
+			{
+				this->_workingByte | fillingBit;
+			}
+			this->_nextBit++;
+		}
+
+		//Add byte to byte array and reset values
+		this->_buffer.push_back(this->_workingByte);
+		this->_workingByte = 0;
+		this->_nextBit = 0;
+	}
+	
+	return this->flush();
+}
+
 void BufferedBitFile::close()
 {
 	this->flush();

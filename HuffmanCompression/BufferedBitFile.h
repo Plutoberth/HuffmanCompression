@@ -12,9 +12,10 @@ using std::string;
 #define DEFAULT_BUFFER_SIZE 32
 
 typedef uint8_t byte;
+typedef bool bit;
 
 /*TODO: Check whether a vector<bool> or a vector<byte> are faster*/
-typedef std::vector<bool> bitArray;
+typedef std::vector<bit> bitArray;
 
 typedef std::vector<byte> byteArray;
 
@@ -38,6 +39,7 @@ public:
 	//The function will return the number of bytes written to file. 
 	//It'll be called automatically when the current number of bytes is >= than the buffer size.
 	int flush();
+	int flush_and_fill(bit fillingBit);
 
 	void close();
 
