@@ -97,14 +97,14 @@ bool HuffmanNode::operator()(const HuffmanNode* first, const HuffmanNode* second
 	return first->getDataRef() > second->getDataRef();
 }
 
-serializedTree HuffmanNode::serialize(std::string filename)
+byteArray HuffmanNode::serialize()
 {
-	serializedTree tree;
+	byteArray tree;
 	this->_recursiveSerialization(tree, this);
 	return tree;
 }
 
-void HuffmanNode::_recursiveSerialization(serializedTree& tree, HuffmanNode const* node)
+void HuffmanNode::_recursiveSerialization(byteArray& tree, HuffmanNode const* node)
 {
 	tree.push_back(node->getDataRef().getData());
 	if (node->getLeftChild())

@@ -9,6 +9,7 @@
 using std::string;
 
 #define BYTE_SIZE 8
+#define DEFAULT_BUFFER_SIZE 32
 
 typedef uint8_t byte;
 
@@ -23,7 +24,7 @@ typedef std::vector<byte> byteArray;
 class BufferedBitFile
 {
 public:
-	BufferedBitFile(string filename, unsigned int bufferSize);
+	BufferedBitFile(string filename, unsigned int bufferSize=DEFAULT_BUFFER_SIZE);
 	~BufferedBitFile();
 
 	//Write the actual bits to the buffer
