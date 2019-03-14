@@ -53,7 +53,7 @@ bool HuffmanCoding::write(string filename)
 	BufferedBitFile file(filename);
 	std::ifstream fileToEncode(this->filename); //file to encode the contents of
 	bool success = file.is_open() && fileToEncode.is_open();
-	char currentChar = 0;
+	char buffer[DEFAULT_BUFFER_SIZE] = { 0 };
 	
 	//If both files could be opened
 	if (success)
@@ -68,9 +68,13 @@ bool HuffmanCoding::write(string filename)
 		file.write(treeBytes);
 
 		//Go over chars and encode
-		while (fileToEncode >> std::noskipws >> currentChar)
+		while (!fileToEncode.eof())
 		{
-			file.write(map[currentChar]);
+			fileToEncode.read(buffer, DEFAULT_BUFFER_SIZE - 1);
+			for (size_t i = 0; i < DEFAULT_BUFFER_SIZE - 1; i++)
+			{
+				file.write(map[buffer[i]]);
+			}
 		}
 
 		bitsFilled = file.flush_and_fill(0);

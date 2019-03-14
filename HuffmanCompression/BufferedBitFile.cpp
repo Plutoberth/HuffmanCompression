@@ -83,7 +83,7 @@ int BufferedBitFile::flush_and_fill(bit fillingBit)
 	int bitsFilled = 0;
 	if (this->_nextBit != 0)
 	{
-		while (this->_nextBit)
+		while (this->_nextBit != BYTE_SIZE)
 		{
 			this->_workingByte = this->_workingByte << 1;
 			if (fillingBit)
