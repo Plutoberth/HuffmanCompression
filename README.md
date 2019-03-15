@@ -1,1 +1,1 @@
-# HuffmanCompression
+# A WIP Huffman compression program
