@@ -91,8 +91,9 @@ bool HuffmanCoding::compress(string source, string target)
 
 bool HuffmanCoding::decompress(string source, string target)
 {
-	int numBits = 0;
+	int bitsLeft = 0;
 	uint8_t excessBits = 0;
+	char currentByte = 0;
 	HuffmanNode tree;
 	HuffmanNode* currentNode = &tree;
 	std::ifstream fileToDecode(source, std::ios::binary);
@@ -116,13 +117,34 @@ bool HuffmanCoding::decompress(string source, string target)
 			tree = HuffmanNode(treeBytes);
 		}
 		fileToDecode.read(reinterpret_cast<char*>(&excessBits), sizeof(excessBits));
-		numBits = (HuffmanCoding::_getNumberOfBytesToEnd(fileToDecode) * 8) - excessBits;
+		bitsLeft = (HuffmanCoding::_getNumberOfBytesToEnd(fileToDecode) * 8) - excessBits;
+		while (fileToDecode.get(currentByte))
+		{
+			//Go from "the left" to "the right". i.e. from MSB to LSB
+			for (int i = 7; i >= 0 && bitsLeft > 0; i--)
+			{
+				//Mask to get the (i)th byte
+				char currentBit = (currentByte >> i) & 1;
 
+				if (currentBit == 1) //1 marks right
+				{
+					currentNode = currentNode->getRightChild();
+				}
+				else if (currentBit == 0) //0 marks left
+				{
+					currentNode = currentNode->getLeftChild();
+				}
 
+				if (currentNode->isLeaf())
+				{
+					decompressedFile <<  currentNode->getData().first;
+					currentNode = &tree;
+				}
 
-		
+				bitsLeft--;
+			}
+		}
 	}
-
 	return success;
 }
 
