@@ -16,14 +16,13 @@ using std::string;
 typedef uint8_t byte;
 typedef bool bit;
 
-/*TODO: Check whether a vector<bool> or a vector<byte> are faster*/
+//Despite the odd template specialization for vector<bool> it's still faster and it's clearer in the code.
 typedef std::vector<bit> bitArray;
 
 typedef std::vector<byte> byteArray;
 
 //This buffered bit file class will accept arrays of bytes, with each element as a single bit.
 //It'll write the bits to file when it reaches the threshold in bufferSize.
-//In retrospect, this class is horrendously overkill.
 class BufferedBitFile : public std::ofstream
 {
 public:

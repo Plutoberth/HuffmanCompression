@@ -45,7 +45,6 @@ void BufferedBitFile::write(const bitArray& arr)
 
 void BufferedBitFile::write(const byteArray & arr)
 {
-	//Simply treat it as a data block
 	this->write(arr.data(), arr.size());
 }
 
@@ -78,17 +77,9 @@ uint8_t BufferedBitFile::flush_and_fill(bit fillingBit)
 	uint8_t bitsFilled = 0;
 	if (this->_nextBit != 0)
 	{
-		while (this->_nextBit != BYTE_SIZE)
-		{
-			this->_workingByte = this->_workingByte << 1;
-			if (fillingBit)
-			{
-				this->_workingByte |= 1;
-			}
-			this->_nextBit++;
-			bitsFilled++;
-		}
-
+		bitsFilled = 8 - this->_nextBit;
+		this->write(std::vector<bit>(bitsFilled, fillingBit));
+		
 		//Add byte to byte array and reset values
 		this->_buffer.push_back(this->_workingByte);
 		this->_workingByte = 0;
