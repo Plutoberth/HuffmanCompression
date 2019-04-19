@@ -3,6 +3,10 @@
 
 int main()
 {
-	HuffmanCoding::compress("D:/test.txt", "D:/Compressed.hfmn");
-	return 0;
+	bool compressedSuccessfully = HuffmanCoding::compress("D:/test.txt", "D:/Compressed.hfmn");
+	if (compressedSuccessfully)
+	{
+		HuffmanCoding::decompress("D:/Compressed.hfmn", "D:/Decompressed.txt");
+	}
+	return compressedSuccessfully;
 }
