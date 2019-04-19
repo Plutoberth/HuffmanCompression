@@ -35,7 +35,7 @@ CharMap HuffmanCoding::_getHuffmanCharMap(const HuffmanNode& tree)
 
 bool HuffmanCoding::compress(string source, string target)
 {
-	//[2 BYTES: Size of binary tree][Binary tree][Huffman data][1 BYTE: Bits filled in the last byte]
+	//[2 BYTES: Size of binary tree][Binary tree][1 BYTE: Excess bits in the last byte][Huffman data]
 
 	uint16_t sizeOfTree = 0;
 	uint8_t bitsFilled = 0;
@@ -50,11 +50,15 @@ bool HuffmanCoding::compress(string source, string target)
 		HuffmanNodeSmartPtr tree = HuffmanCoding::_getHuffmanTree(source);
 		byteArray treeBytes = tree->serialize();
 		CharMap map = HuffmanCoding::_getHuffmanCharMap(*tree);
+		uint64_t excessBitsLoc = 0;
 		sizeOfTree = static_cast<uint16_t>(treeBytes.size());
 
 		//Write the size of the tree
 		encodedFile.write((byte*) &sizeOfTree, sizeof(sizeOfTree));
 		encodedFile.write(treeBytes);
+		encodedFile.flush();
+		excessBitsLoc = encodedFile.tellp();
+		encodedFile.seekp(excessBitsLoc + 1);
 
 		//Go over chars and encode
 		while (!fileToEncode.eof())
@@ -68,6 +72,7 @@ bool HuffmanCoding::compress(string source, string target)
 		}
 
 		bitsFilled = encodedFile.flush_and_fill(0);
+		encodedFile.seekp(excessBitsLoc);
 		encodedFile.write((byte*)&bitsFilled, sizeof(bitsFilled));
 	}
 
