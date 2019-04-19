@@ -24,6 +24,7 @@ public:
 	static bool decompress(string source, string target);
 
 private:
+	static int _getNumberOfBytesToEnd(std::istream& file);
 	static HuffmanNodeSmartPtr _getHuffmanTree(string filename);
 	//Get the char map to encode the string to its constituent bytes.
 	static CharMap _getHuffmanCharMap(const HuffmanNode& tree);

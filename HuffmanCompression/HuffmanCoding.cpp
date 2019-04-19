@@ -1,5 +1,15 @@
 #include "HuffmanCoding.h"
 
+int HuffmanCoding::_getNumberOfBytesToEnd(std::istream& file)
+{
+	std::streampos originalPosition = file.tellg();
+	int diff = 0;
+	file.seekg(0, std::ios::end);
+	diff = file.tellg() - originalPosition;
+	file.seekg(originalPosition);
+	return diff;
+}
+
 HuffmanNodeSmartPtr HuffmanCoding::_getHuffmanTree(string filename)
 {
 	HuffmanNode* first = nullptr;
@@ -105,6 +115,17 @@ bool HuffmanCoding::decompress(string source, string target)
 			//Initialize the tree with the needed bytes
 			tree = HuffmanNode(treeBytes);
 		}
+		fileToDecode.read(reinterpret_cast<char*>(&excessBits), sizeof(excessBits));
+		numBits = (HuffmanCoding::_getNumberOfBytesToEnd(fileToDecode) * 8) - excessBits;
+
+
+
+		
+	}
+
+	return success;
+}
+
 
 HuffmanPriorityQueue HuffmanCoding::_getFrequencyQueue(string filename)
 {
