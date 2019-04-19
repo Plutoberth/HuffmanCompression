@@ -8,6 +8,7 @@
 #include <fstream>
 #include <memory>
 #include <iostream>
+#include <cassert>
 
 typedef std::priority_queue<HuffmanNode*, std::vector<HuffmanNode*>, HuffmanNode> HuffmanPriorityQueue;
 
@@ -26,7 +27,6 @@ public:
 private:
 	static int _getNumberOfBytesToEnd(std::istream& file);
 	static HuffmanNodeSmartPtr _getHuffmanTree(string filename);
-	//Get the char map to encode the string to its constituent bytes.
 	static CharMap _getHuffmanCharMap(const HuffmanNode& tree);
 
 	static HuffmanPriorityQueue _getFrequencyQueue(string filename);

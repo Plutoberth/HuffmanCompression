@@ -63,14 +63,13 @@ bool HuffmanCoding::compress(string source, string target)
 		uint64_t excessBitsLoc = 0;
 		sizeOfTree = static_cast<uint16_t>(treeBytes.size());
 
-		//Write the size of the tree
+		//Write the size of the tree and reserve space for the excess bits
 		encodedFile.write((byte*) &sizeOfTree, sizeof(sizeOfTree));
 		encodedFile.write(treeBytes);
 		encodedFile.flush();
 		excessBitsLoc = encodedFile.tellp();
 		encodedFile.seekp(excessBitsLoc + 1);
 
-		//Go over chars and encode
 		while (!fileToEncode.eof())
 		{
 			memset(buffer, NULL, DEFAULT_BUFFER_SIZE);
@@ -97,8 +96,6 @@ bool HuffmanCoding::decompress(string source, string target)
 	HuffmanNode tree;
 	HuffmanNode* currentNode = &tree;
 	std::ifstream fileToDecode(source, std::ios::binary);
-	//Treat newlines as regular bytes
-	fileToDecode.unsetf(std::ios::skipws);
 
 	std::ofstream decompressedFile(target);
 
@@ -113,6 +110,7 @@ bool HuffmanCoding::decompress(string source, string target)
 			//Use resize and not reserve as vector.data() only guarantees that [vector.data() + vector.size()] is a valid range, not [vector.data() + vector.capacity()]
 			treeBytes.resize(sizeOfTree);
 			fileToDecode.read(reinterpret_cast<char*>(treeBytes.data()), sizeOfTree);
+			assert(fileToDecode.gcount() == sizeOfTree);
 			//Initialize the tree with the needed bytes
 			tree = std::move(HuffmanNode(treeBytes));
 		}
