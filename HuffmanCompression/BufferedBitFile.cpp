@@ -54,7 +54,7 @@ void BufferedBitFile::write(const byteArray & arr)
 	}
 }
 
-void BufferedBitFile::write(byte* s, int n)
+void BufferedBitFile::write(const byte* s, int n)
 {
 	this->_buffer.insert(this->_buffer.end(), s, s + n);
 

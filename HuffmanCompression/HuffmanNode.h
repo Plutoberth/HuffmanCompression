@@ -39,7 +39,6 @@ public:
 	//Comparison op for huffman node with huffman data
 	bool operator() (const HuffmanNode* first, const HuffmanNode* second) const;
 
-	//Returns the success of the operation
 	byteArray serialize();
 
 private:
