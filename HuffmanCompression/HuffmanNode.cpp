@@ -22,6 +22,8 @@ HuffmanNode::HuffmanNode(HuffmanPair pair, HuffmanNode * left, HuffmanNode * rig
 
 HuffmanNode::HuffmanNode(byteArray binaryRep)
 {
+	this->_left = nullptr;
+	this->_right = nullptr;
 	this->_recursiveDeserialization(binaryRep, this);
 }
 
