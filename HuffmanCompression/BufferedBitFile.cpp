@@ -45,13 +45,8 @@ void BufferedBitFile::write(const bitArray& arr)
 
 void BufferedBitFile::write(const byteArray & arr)
 {
-	//Concatenate the byte vectors
-	this->_buffer.insert(this->_buffer.end(), arr.begin(), arr.end());
-	//Flush if buffer size exceeds the maximum
-	if (this->_buffer.size() >= this->_maxBufferSize)
-	{
-		this->flush();
-	}
+	//Simply treat it as a data block
+	this->write(arr.data(), arr.size());
 }
 
 void BufferedBitFile::write(const byte* s, int n)
