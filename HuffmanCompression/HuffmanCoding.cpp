@@ -1,15 +1,10 @@
 #include "HuffmanCoding.h"
 
-HuffmanCoding::HuffmanCoding(string file)
-{
-	this->filename = file;
-}
-
-HuffmanNodeSmartPtr HuffmanCoding::getHuffmanTree()
+HuffmanNodeSmartPtr HuffmanCoding::_getHuffmanTree(string filename)
 {
 	HuffmanNode* first = nullptr;
 	HuffmanNode* second = nullptr;
-	HuffmanPriorityQueue pqueue = this->getFrequencyQueue();
+	HuffmanPriorityQueue pqueue = HuffmanCoding::_getFrequencyQueue(filename);
 	HuffmanNode res;
 
 	while (!pqueue.empty())
@@ -30,12 +25,7 @@ HuffmanNodeSmartPtr HuffmanCoding::getHuffmanTree()
 	return HuffmanNodeSmartPtr(first);
 }
 
-CharMap HuffmanCoding::getHuffmanCharMap()
-{
-	return this->getHuffmanCharMap(*this->getHuffmanTree());
-}
-
-CharMap HuffmanCoding::getHuffmanCharMap(const HuffmanNode& tree)
+CharMap HuffmanCoding::_getHuffmanCharMap(const HuffmanNode& tree)
 {
 	CharMap map;
 	//Scan the binary tree with our function
@@ -43,28 +33,28 @@ CharMap HuffmanCoding::getHuffmanCharMap(const HuffmanNode& tree)
 	return map;
 }
 
-bool HuffmanCoding::write(string filename)
+bool HuffmanCoding::compress(string source, string target)
 {
 	//[2 BYTES: Size of binary tree][Binary tree][Huffman data][1 BYTE: Bits filled in the last byte]
 
 	uint16_t sizeOfTree = 0;
 	uint8_t bitsFilled = 0;
-	BufferedBitFile file(filename);
-	std::ifstream fileToEncode(this->filename); //file to encode the contents of
-	bool success = file.is_open() && fileToEncode.is_open();
+	BufferedBitFile encodedFile(target);
+	std::ifstream fileToEncode(source); //file to encode the contents of
+	bool success = encodedFile.is_open() && fileToEncode.is_open();
 	char buffer[DEFAULT_BUFFER_SIZE] = { 0 };
 	
 	//If both files could be opened
 	if (success)
 	{
-		HuffmanNodeSmartPtr tree = this->getHuffmanTree();
+		HuffmanNodeSmartPtr tree = HuffmanCoding::_getHuffmanTree(source);
 		byteArray treeBytes = tree->serialize();
-		CharMap map = this->getHuffmanCharMap(*tree);
+		CharMap map = HuffmanCoding::_getHuffmanCharMap(*tree);
 		sizeOfTree = static_cast<uint16_t>(treeBytes.size());
 
 		//Write the size of the tree
-		file.write((byte*) &sizeOfTree, sizeof(uint16_t));
-		file.write(treeBytes);
+		encodedFile.write((byte*) &sizeOfTree, sizeof(uint16_t));
+		encodedFile.write(treeBytes);
 
 		//Go over chars and encode
 		while (!fileToEncode.eof())
@@ -73,23 +63,24 @@ bool HuffmanCoding::write(string filename)
 			fileToEncode.read(buffer, DEFAULT_BUFFER_SIZE - 1);
 			for (size_t i = 0; buffer[i] != NULL; i++)
 			{
-				file.write(map[buffer[i]]);
+				encodedFile.write(map[buffer[i]]);
 			}
 		}
 
-		bitsFilled = file.flush_and_fill(0);
-		file.write((byte*)&bitsFilled, sizeof(uint8_t));
+		bitsFilled = encodedFile.flush_and_fill(0);
+		encodedFile.write((byte*)&bitsFilled, sizeof(uint8_t));
 	}
 
 	return success;
 }
 
-HuffmanPriorityQueue HuffmanCoding::getFrequencyQueue()
+
+HuffmanPriorityQueue HuffmanCoding::_getFrequencyQueue(string filename)
 {
 	//A sorted map to store our frequencies
 	std::map<char, int> frequencyMap;
 	//Input stream to read the file
-	std::ifstream datafile(this->filename);
+	std::ifstream datafile(filename);
 	char buffer[DEFAULT_BUFFER_SIZE] = { 0 };
 	HuffmanPriorityQueue pqueue;
 
@@ -115,7 +106,7 @@ HuffmanPriorityQueue HuffmanCoding::getFrequencyQueue()
 
 	for (auto pair: frequencyMap)
 	{
-		pqueue.push(new HuffmanNode(HuffmanPair(pair.first, pair.second)));
+		pqueue.push(new HuffmanNode(pair));
 	}
 
 	return pqueue;

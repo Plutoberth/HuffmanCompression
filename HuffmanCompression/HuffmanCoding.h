@@ -19,18 +19,14 @@ typedef std::map<char, bitArray> CharMap;
 class HuffmanCoding
 {
 public:
-	HuffmanCoding(string filename);
-
-	HuffmanNodeSmartPtr getHuffmanTree();
-	//Get the char map to encode the string to its constituent bytes.
-	CharMap getHuffmanCharMap();
-	static CharMap getHuffmanCharMap(const HuffmanNode& tree);
-
 	//Write the tree and compressed text to file
-	bool write(string filename);
+	static bool compress(string source, string target);
 
 private:
-	string filename;
-	HuffmanPriorityQueue getFrequencyQueue();
+	static HuffmanNodeSmartPtr _getHuffmanTree(string filename);
+	//Get the char map to encode the string to its constituent bytes.
+	static CharMap _getHuffmanCharMap(const HuffmanNode& tree);
+
+	static HuffmanPriorityQueue _getFrequencyQueue(string filename);
 	static void _scanBinaryTree(HuffmanNode const* tree, CharMap& map, bitArray currentLocation = {});
 };

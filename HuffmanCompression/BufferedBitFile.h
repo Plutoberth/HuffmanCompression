@@ -23,7 +23,6 @@ typedef std::vector<byte> byteArray;
 
 //This buffered bit file class will accept arrays of bytes, with each element as a single bit.
 //It'll write the bits to file when it reaches the threshold in bufferSize.
-//It's not responsible for an incomplete byte, and it'll not be written.
 //In retrospect, this class is horrendously overkill.
 class BufferedBitFile : public std::ofstream
 {
