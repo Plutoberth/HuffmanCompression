@@ -25,7 +25,7 @@ typedef std::vector<byte> byteArray;
 //It'll write the bits to file when it reaches the threshold in bufferSize.
 //It's not responsible for an incomplete byte, and it'll not be written.
 //In retrospect, this class is horrendously overkill.
-class BufferedBitFile : protected std::ofstream
+class BufferedBitFile : public std::ofstream
 {
 public:
 	BufferedBitFile(string filename, unsigned int maxBufferSize=DEFAULT_BUFFER_SIZE);
