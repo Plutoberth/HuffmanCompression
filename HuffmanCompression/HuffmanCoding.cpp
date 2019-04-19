@@ -53,7 +53,7 @@ bool HuffmanCoding::compress(string source, string target)
 		sizeOfTree = static_cast<uint16_t>(treeBytes.size());
 
 		//Write the size of the tree
-		encodedFile.write((byte*) &sizeOfTree, sizeof(uint16_t));
+		encodedFile.write((byte*) &sizeOfTree, sizeof(sizeOfTree));
 		encodedFile.write(treeBytes);
 
 		//Go over chars and encode
@@ -68,7 +68,7 @@ bool HuffmanCoding::compress(string source, string target)
 		}
 
 		bitsFilled = encodedFile.flush_and_fill(0);
-		encodedFile.write((byte*)&bitsFilled, sizeof(uint8_t));
+		encodedFile.write((byte*)&bitsFilled, sizeof(bitsFilled));
 	}
 
 	return success;
