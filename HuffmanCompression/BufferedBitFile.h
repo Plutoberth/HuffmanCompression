@@ -42,7 +42,7 @@ public:
 	//It'll be called automatically when the current number of bytes exceeds the buffer size.
 	int flush();
 	//Returns the number of bits that were filled in
-	int flush_and_fill(bit fillingBit);
+	uint8_t flush_and_fill(bit fillingBit);
 
 	//Flushes the current full bytes and closes the file. 
 	//Note: the incomplete byte is discarded.

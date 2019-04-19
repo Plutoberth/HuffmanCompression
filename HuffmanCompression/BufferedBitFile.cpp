@@ -78,9 +78,9 @@ int BufferedBitFile::flush()
 	return bytesWritten;
 }
 
-int BufferedBitFile::flush_and_fill(bit fillingBit)
+uint8_t BufferedBitFile::flush_and_fill(bit fillingBit)
 {
-	int bitsFilled = 0;
+	uint8_t bitsFilled = 0;
 	if (this->_nextBit != 0)
 	{
 		while (this->_nextBit != BYTE_SIZE)
