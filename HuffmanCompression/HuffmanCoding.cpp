@@ -79,6 +79,32 @@ bool HuffmanCoding::compress(string source, string target)
 	return success;
 }
 
+bool HuffmanCoding::decompress(string source, string target)
+{
+	int numBits = 0;
+	uint8_t excessBits = 0;
+	HuffmanNode tree;
+	HuffmanNode* currentNode = &tree;
+	std::ifstream fileToDecode(source, std::ios::binary);
+	//Treat newlines as regular bytes
+	fileToDecode.unsetf(std::ios::skipws);
+
+	std::ofstream decompressedFile(target);
+
+	bool success = fileToDecode.is_open() && decompressedFile.is_open();
+
+	if (success)
+	{
+		{
+			uint16_t sizeOfTree = 0;
+			byteArray treeBytes = {};
+			fileToDecode.read(reinterpret_cast<char*>(&sizeOfTree), sizeof(sizeOfTree));
+			//Use resize and not reserve as vector.data() only guarantees that [vector.data() + vector.size()] is a valid range, not [vector.data() + vector.capacity()]
+			treeBytes.resize(sizeOfTree);
+			fileToDecode.read(reinterpret_cast<char*>(treeBytes.data()), sizeOfTree);
+			//Initialize the tree with the needed bytes
+			tree = HuffmanNode(treeBytes);
+		}
 
 HuffmanPriorityQueue HuffmanCoding::_getFrequencyQueue(string filename)
 {

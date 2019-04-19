@@ -21,6 +21,7 @@ class HuffmanCoding
 public:
 	//Write the tree and compressed text to file
 	static bool compress(string source, string target);
+	static bool decompress(string source, string target);
 
 private:
 	static HuffmanNodeSmartPtr _getHuffmanTree(string filename);
