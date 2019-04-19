@@ -44,7 +44,7 @@ public:
 	byteArray serialize();
 
 private:
-	static void _recursiveSerialization(byteArray& tree, HuffmanNode const* node);
+	void _recursiveSerialization(byteArray& tree) const;
 	void _recursiveDeserialization(const byteArray& rep, HuffmanNode* currentNode);
 	HuffmanPair _data;
 	HuffmanNode* _right;
