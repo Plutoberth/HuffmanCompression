@@ -114,7 +114,7 @@ bool HuffmanCoding::decompress(string source, string target)
 			treeBytes.resize(sizeOfTree);
 			fileToDecode.read(reinterpret_cast<char*>(treeBytes.data()), sizeOfTree);
 			//Initialize the tree with the needed bytes
-			tree = HuffmanNode(treeBytes);
+			tree = std::move(HuffmanNode(treeBytes));
 		}
 		fileToDecode.read(reinterpret_cast<char*>(&excessBits), sizeof(excessBits));
 		bitsLeft = (HuffmanCoding::_getNumberOfBytesToEnd(fileToDecode) * 8) - excessBits;

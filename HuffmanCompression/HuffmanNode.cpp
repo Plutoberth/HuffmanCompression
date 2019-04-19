@@ -34,7 +34,7 @@ HuffmanNode::HuffmanNode(const HuffmanNode & other)
 	*this = other;
 }
 
-HuffmanNode::HuffmanNode(const HuffmanNode && other) noexcept
+HuffmanNode::HuffmanNode(HuffmanNode && other) noexcept
 {
 	//Move constructor - only transfers the ownership of resources
 	//Used with rvalues, such as function return values.
@@ -42,6 +42,11 @@ HuffmanNode::HuffmanNode(const HuffmanNode && other) noexcept
 	this->_data = other._data;
 	this->_left = other._left;
 	this->_right = other._right;
+
+	//Make sure that the other one no longer has ownership
+	other._right = nullptr;
+	other._left = nullptr;
+	other._data = { 0, 0 };
 }
 
 HuffmanNode& HuffmanNode::operator=(const HuffmanNode & other)
