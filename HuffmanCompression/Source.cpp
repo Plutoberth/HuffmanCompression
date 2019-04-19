@@ -3,7 +3,6 @@
 
 int main()
 {
-	HuffmanCoding huffman("C:/Users/Nir/Documents/test.txt");
-	huffman.write("C:/Users/Nir/Documents/test.hfmn");
+	HuffmanCoding::compress("D:/test.txt", "D:/Compressed.hfmn");
 	return 0;
 }
