@@ -34,9 +34,6 @@ public:
 	HuffmanNode* getRightChild() const;
 	HuffmanNode* getLeftChild() const;
 
-	void setRightChild(HuffmanNode* node);
-	void setLeftChild(HuffmanNode* node);
-
 	//Comparison op for huffman node with huffman data
 	bool operator() (const HuffmanNode* first, const HuffmanNode* second) const;
 
@@ -45,7 +42,7 @@ public:
 
 private:
 	void _recursiveSerialization(byteArray& tree) const;
-	void _deserializeInto(const byteArray& rep);
+	int _deserializeInto(const byteArray& rep, int firstLocation=0);
 	HuffmanPair _data;
 	HuffmanNode* _right;
 	HuffmanNode* _left;

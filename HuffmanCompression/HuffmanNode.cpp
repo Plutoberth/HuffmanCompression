@@ -89,16 +89,6 @@ HuffmanNode * HuffmanNode::getLeftChild() const
 	return this->_left;
 }
 
-void HuffmanNode::setRightChild(HuffmanNode* node)
-{
-	this->_right = node;
-}
-
-void HuffmanNode::setLeftChild(HuffmanNode* node)
-{
-	this->_left = node;
-}
-
 bool HuffmanNode::operator()(const HuffmanNode* first, const HuffmanNode* second) const
 {
 	return first->getDataRef().second > second->getDataRef().second;
@@ -133,10 +123,8 @@ void HuffmanNode::_recursiveSerialization(byteArray& treeBytes) const
 	}
 }
 
-void HuffmanNode::_deserializeInto(const byteArray& rep)
+int HuffmanNode::_deserializeInto(const byteArray& rep, int location)
 {
-	static int location = 0;
-
 	this->_data = { rep[location++], 0 };
 
 	//Left side isn't present
@@ -147,7 +135,7 @@ void HuffmanNode::_deserializeInto(const byteArray& rep)
 	else
 	{
 		this->_left = new HuffmanNode();
-		this->_left->_deserializeInto(rep);
+		location = this->_left->_deserializeInto(rep, location);
 	}
 
 	//Right side isn't present
@@ -158,6 +146,7 @@ void HuffmanNode::_deserializeInto(const byteArray& rep)
 	else
 	{
 		this->_right = new HuffmanNode();
-		this->_right->_deserializeInto(rep);
+		location = this->_right->_deserializeInto(rep, location);
 	}
+	return location;
 }
