@@ -89,6 +89,11 @@ HuffmanNode * HuffmanNode::getLeftChild() const
 	return this->_left;
 }
 
+bool HuffmanNode::isLeaf() const
+{
+	return this->_left == nullptr && this->_right == nullptr;
+}
+
 bool HuffmanNode::operator()(const HuffmanNode* first, const HuffmanNode* second) const
 {
 	return first->getDataRef().second > second->getDataRef().second;

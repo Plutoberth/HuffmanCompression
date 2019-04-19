@@ -34,6 +34,8 @@ public:
 	HuffmanNode* getRightChild() const;
 	HuffmanNode* getLeftChild() const;
 
+	bool isLeaf() const;
+
 	//Comparison op for huffman node with huffman data
 	bool operator() (const HuffmanNode* first, const HuffmanNode* second) const;
 
