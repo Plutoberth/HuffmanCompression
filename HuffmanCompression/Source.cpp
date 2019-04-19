@@ -8,5 +8,5 @@ int main()
 	{
 		HuffmanCoding::decompress("D:/Compressed.hfmn", "D:/Decompressed.txt");
 	}
-	return compressedSuccessfully;
+	return compressedSuccessfully ? 0 : 1;
 }
