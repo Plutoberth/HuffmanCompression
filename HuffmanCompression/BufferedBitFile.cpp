@@ -3,7 +3,7 @@
 BufferedBitFile::BufferedBitFile(string filename, unsigned int bufferSize)
 	: std::ofstream(filename, std::ios::binary)
 {
-	this->_bufferSize = bufferSize;
+	this->_maxBufferSize = bufferSize;
 	//Allocate now for performance reasons. This isn't significant unless the bufferSize is really large.
 	this->_buffer.reserve(bufferSize);
 	this->_workingByte = 0;
@@ -12,9 +12,6 @@ BufferedBitFile::BufferedBitFile(string filename, unsigned int bufferSize)
 
 BufferedBitFile::~BufferedBitFile()
 {
-	//Flush and close the file
-	//Note: the incomplete byte is discarded.
-	this->flush();
 	this->close();
 }
 
@@ -32,7 +29,7 @@ void BufferedBitFile::write(const bitArray& arr)
 
 		//Shift left by one bit
 		this->_workingByte = this->_workingByte << 1;
-		if (bit) //Makes our class more generic
+		if (bit)
 		{
 			this->_workingByte |= 1;
 		}
@@ -40,7 +37,7 @@ void BufferedBitFile::write(const bitArray& arr)
 	}
 
 	//Flush if buffer size exceeds the limit
-	if (this->_buffer.size() >= this->_bufferSize)
+	if (this->_buffer.size() >= this->_maxBufferSize)
 	{
 		this->flush();
 	}
@@ -50,8 +47,8 @@ void BufferedBitFile::write(const byteArray & arr)
 {
 	//Concatenate the byte vectors
 	this->_buffer.insert(this->_buffer.end(), arr.begin(), arr.end());
-	//Flush if buffer size is >= max buffer size received in ctor
-	if (this->_buffer.size() >= this->_bufferSize)
+	//Flush if buffer size exceeds the maximum
+	if (this->_buffer.size() >= this->_maxBufferSize)
 	{
 		this->flush();
 	}
@@ -61,7 +58,7 @@ void BufferedBitFile::write(byte* s, int n)
 {
 	this->_buffer.insert(this->_buffer.end(), s, s + n);
 
-	if (this->_buffer.size() >= this->_bufferSize)
+	if (this->_buffer.size() >= this->_maxBufferSize)
 	{
 		this->flush();
 	}
@@ -72,7 +69,8 @@ int BufferedBitFile::flush()
 	int bytesWritten = 0;
 	if (this->is_open())
 	{
-		//Cast byte ptr to const char*. Both are of the same size so this works well.
+		//Make sure that they're the same size because we're going to use the data pointer
+		static_assert(sizeof(const char) == sizeof(byte), ASSERT_SIZE_ERROR);
 		std::ofstream::write((const char*) this->_buffer.data(), this->_buffer.size());
 		bytesWritten = this->_buffer.size();
 		this->_buffer.clear();
@@ -109,6 +107,8 @@ int BufferedBitFile::flush_and_fill(bit fillingBit)
 void BufferedBitFile::close()
 {
 	this->flush();
+	this->_workingByte = 0;
+	this->_nextBit = 0;
 	std::ofstream::close();
 }
 

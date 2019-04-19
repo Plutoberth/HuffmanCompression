@@ -11,6 +11,8 @@ using std::string;
 #define BYTE_SIZE 8
 #define DEFAULT_BUFFER_SIZE 4096
 
+#define ASSERT_SIZE_ERROR "Error: sizeof(char) is not a byte"
+
 typedef uint8_t byte;
 typedef bool bit;
 
@@ -23,10 +25,10 @@ typedef std::vector<byte> byteArray;
 //It'll write the bits to file when it reaches the threshold in bufferSize.
 //It's not responsible for an incomplete byte, and it'll not be written.
 //In retrospect, this class is horrendously overkill.
-class BufferedBitFile : public std::ofstream
+class BufferedBitFile : protected std::ofstream
 {
 public:
-	BufferedBitFile(string filename, unsigned int bufferSize=DEFAULT_BUFFER_SIZE);
+	BufferedBitFile(string filename, unsigned int maxBufferSize=DEFAULT_BUFFER_SIZE);
 	~BufferedBitFile();
 
 	//Write the actual bits to the buffer
@@ -38,17 +40,18 @@ public:
 	void open(const string filename);
 
 	//The function will return the number of bytes written to file. 
-	//It'll be called automatically when the current number of bytes is >= than the buffer size.
+	//It'll be called automatically when the current number of bytes exceeds the buffer size.
 	int flush();
 	//Returns the number of bits that were filled in
 	int flush_and_fill(bit fillingBit);
 
+	//Flushes the current full bytes and closes the file. 
+	//Note: the incomplete byte is discarded.
 	void close();
 
 private:
-	unsigned int _bufferSize;
+	unsigned int _maxBufferSize;
 	byte _workingByte;
-	//No reason to use a whole byte for a value that can only be 0-7
 	uint8_t _nextBit;
 	byteArray _buffer;
 };
