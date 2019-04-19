@@ -110,7 +110,10 @@ bool HuffmanCoding::decompress(string source, string target)
 			//Use resize and not reserve as vector.data() only guarantees that [vector.data() + vector.size()] is a valid range, not [vector.data() + vector.capacity()]
 			treeBytes.resize(sizeOfTree);
 			fileToDecode.read(reinterpret_cast<char*>(treeBytes.data()), sizeOfTree);
-			assert(fileToDecode.gcount() == sizeOfTree);
+			if (fileToDecode.gcount() != sizeOfTree)
+			{
+				throw std::runtime_error(FILE_BYTES_ERROR);
+			}
 			//Initialize the tree with the needed bytes
 			tree = std::move(HuffmanNode(treeBytes));
 		}

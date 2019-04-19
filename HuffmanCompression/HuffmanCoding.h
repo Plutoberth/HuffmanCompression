@@ -8,7 +8,8 @@
 #include <fstream>
 #include <memory>
 #include <iostream>
-#include <cassert>
+
+#define FILE_BYTES_ERROR "Error: The file and the tree inside it are corrupt."
 
 typedef std::priority_queue<HuffmanNode*, std::vector<HuffmanNode*>, HuffmanNode> HuffmanPriorityQueue;
 
