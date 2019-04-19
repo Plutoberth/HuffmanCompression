@@ -61,7 +61,7 @@ bool HuffmanCoding::write(string filename)
 		HuffmanNodeSmartPtr tree = this->getHuffmanTree();
 		byteArray treeBytes = tree->serialize();
 		CharMap map = this->getHuffmanCharMap(*tree);
-		sizeOfTree = treeBytes.size();
+		sizeOfTree = static_cast<uint16_t>(treeBytes.size());
 
 		//Write the size of the tree
 		file.write((byte*) &sizeOfTree, sizeof(uint16_t));

@@ -6,6 +6,8 @@ BufferedBitFile::BufferedBitFile(string filename, unsigned int bufferSize)
 	this->_bufferSize = bufferSize;
 	//Allocate now for performance reasons. This isn't significant unless the bufferSize is really large.
 	this->_buffer.reserve(bufferSize);
+	this->_workingByte = 0;
+	this->_nextBit = 0;
 }
 
 BufferedBitFile::~BufferedBitFile()
@@ -37,7 +39,7 @@ void BufferedBitFile::write(const bitArray& arr)
 		this->_nextBit++;
 	}
 
-	//Flush if buffer size is >= max buffer size received in ctor
+	//Flush if buffer size exceeds the limit
 	if (this->_buffer.size() >= this->_bufferSize)
 	{
 		this->flush();

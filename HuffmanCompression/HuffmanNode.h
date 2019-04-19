@@ -22,7 +22,7 @@ public:
 	//Copy ctor
 	HuffmanNode(const HuffmanNode& other);
 	//Move ctor - effective when transferring ownership like with rvalues
-	HuffmanNode(const HuffmanNode&& other);
+	HuffmanNode(const HuffmanNode&& other) noexcept;
 	//Assignment operator
 	HuffmanNode& operator=(const HuffmanNode& other);
 

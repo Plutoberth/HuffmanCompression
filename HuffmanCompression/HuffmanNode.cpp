@@ -34,7 +34,7 @@ HuffmanNode::HuffmanNode(const HuffmanNode & other)
 	*this = other;
 }
 
-HuffmanNode::HuffmanNode(const HuffmanNode && other)
+HuffmanNode::HuffmanNode(const HuffmanNode && other) noexcept
 {
 	//Move constructor - only transfers the ownership of resources
 	//Used with rvalues, such as function return values.
