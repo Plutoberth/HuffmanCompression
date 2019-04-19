@@ -38,9 +38,8 @@ CharMap HuffmanCoding::getHuffmanCharMap()
 CharMap HuffmanCoding::getHuffmanCharMap(const HuffmanNode& tree)
 {
 	CharMap map;
-	bitArray arr;
 	//Scan the binary tree with our function
-	HuffmanCoding::_scanBinaryTree(&tree, map, arr);
+	HuffmanCoding::_scanBinaryTree(&tree, map);
 	return map;
 }
 
@@ -134,7 +133,7 @@ void HuffmanCoding::_scanBinaryTree(HuffmanNode const* tree, CharMap & map, bitA
 	//Scan left child
 	if (tree->getLeftChild())
 	{
-		//Add a 0 to signify a left turn and send the bit vector, then pop it
+		//Add a 0 to signify a left turn and send the bit vector, then pop it because the function came back
 		currentLocation.push_back(0);
 		HuffmanCoding::_scanBinaryTree(tree->getLeftChild(), map, currentLocation);
 		currentLocation.pop_back();
@@ -142,8 +141,7 @@ void HuffmanCoding::_scanBinaryTree(HuffmanNode const* tree, CharMap & map, bitA
 
 	if (tree->getRightChild())
 	{
-		//Add a 1 to signify a right turn and then send the bit vector.
-		//No need to pop it as it dies in the next line anyway.
+		//1 marks a right turn in our encoding
 		currentLocation.push_back(1);
 		HuffmanCoding::_scanBinaryTree(tree->getRightChild(), map, currentLocation);
 	}

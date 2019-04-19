@@ -32,5 +32,5 @@ public:
 private:
 	string filename;
 	HuffmanPriorityQueue getFrequencyQueue();
-	static void _scanBinaryTree(HuffmanNode const* tree, CharMap& map, bitArray currentLocation);
+	static void _scanBinaryTree(HuffmanNode const* tree, CharMap& map, bitArray currentLocation = {});
 };
